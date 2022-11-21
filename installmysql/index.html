@@ -1,0 +1,598 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Docs Tech">
+      
+      
+        <link rel="canonical" href="https://docstech.github.io/installmysql/">
+      
+      <link rel="icon" href="..">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Installing MySQL on Ubuntu 18.04 - Docs tech</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-mysql-on-ubuntu-1804" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Docs tech" class="md-header__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Docs tech
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installing MySQL on Ubuntu 18.04
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Docs tech" class="md-nav__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Docs tech
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ceph-s3-intelligent-tiering-lifecycle-management/" class="md-nav__link">
+        S3 Intelligent Tiering vs. Lifecycle Management
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cephbasedstoragetoakubernetescluster/" class="md-nav__link">
+        Ceph-based storage to a Kubernetes cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installingbuildahandpodman/" class="md-nav__link">
+        Installing buildah and podman on Ubuntu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installing MySQL on Ubuntu 18.04
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Installing MySQL on Ubuntu 18.04
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#buoc-1-cai-at-mysql" class="md-nav__link">
+    Bước 1 – Cài đặt MySQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-configuring-mysql" class="md-nav__link">
+    Step 2 – Configuring MySQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-optional-adjusting-user-authentication-and-permissions" class="md-nav__link">
+    Step 3 – (Optional) Adjusting User Authentication and Permissions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-testing-mysql" class="md-nav__link">
+    Step 4 – Testing MySQL
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3lifecycleextend/" class="md-nav__link">
+        S3 Lifecycle Extend
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#buoc-1-cai-at-mysql" class="md-nav__link">
+    Bước 1 – Cài đặt MySQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-configuring-mysql" class="md-nav__link">
+    Step 2 – Configuring MySQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-optional-adjusting-user-authentication-and-permissions" class="md-nav__link">
+    Step 3 – (Optional) Adjusting User Authentication and Permissions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-testing-mysql" class="md-nav__link">
+    Step 4 – Testing MySQL
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/docstech/edit/master/docs/installmysql.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="installing-mysql-on-ubuntu-1804">Installing MySQL on Ubuntu 18.04<a class="headerlink" href="#installing-mysql-on-ubuntu-1804" title="Permanent link">&para;</a></h1>
+<p><strong>Instructions for Installing MySQL on Ubuntu 18.04</strong></p>
+<p>Instructions for Installing MySQL on Ubuntu 18.04
+============================== ===========</p>
+<p>MySQL is an open source database management system, usually installed as part of a web server. -domain/cach-cai-dat-va-cau-hinh-caddy-web-server-tren-vps-ubuntu-18-04.html) LAMP Stack (Linux, Apache, MySQL, PHP / Python / Perl) . It uses a relational database and SQL (Structured Query Language) to manage its data.</p>
+<p>Installing MySQL on Ubuntu is pretty straightforward: update your packages, then install the <code>mysql-server</code> package and run the included security command.</p>
+<p><code>sudo apt update sudo apt install mysql-server sudo mysql_secure_installation</code></p>
+<p>This article will guide you through installing MySQL version 5.7 on Ubuntu 18.04.</p>
+<p><img alt="Hướng dẫn cài đặt MySQL trên Ubuntu 18.04" src="https://images.viblo.asia/5d8ad2ce-3f02-417f-b141-c1233218e0b5.png" />
+Hướng dẫn cài đặt MySQL trên Ubuntu 18.04</p>
+<h3 id="buoc-1-cai-at-mysql">Bước 1 – Cài đặt MySQL<a class="headerlink" href="#buoc-1-cai-at-mysql" title="Permanent link">&para;</a></h3>
+<p>Trên Ubuntu 18.04, only the latest version of MySQL is included in the APT package by default. At the time of writing, it's MySQL 5.7.</p>
+<p>To install it, update the packages on your server with <code>apt</code>:</p>
+<p><code>sudo apt update</code></p>
+<p>Then install the default package:</p>
+<p><code>sudo apt install mysql-server</code></p>
+<p>This command will install MySQL, but won't prompt you to set a password or make any other configuration changes. Because this makes your MySQL installation unsafe, we will address this in step 2.</p>
+<h3 id="step-2-configuring-mysql">Step 2 – Configuring MySQL<a class="headerlink" href="#step-2-configuring-mysql" title="Permanent link">&para;</a></h3>
+<p>For fresh installations, you will need to run a security script. attached. This changes some of the less secure default options for things like remote root logins and sample users. On older versions of MySQL, you also need to initialize the data directory manually, but this is done automatically with the following.</p>
+<p>Run the security script:</p>
+<p><code>sudo mysql_secure_installation</code></p>
+<p>This will take you through a series of prompts, you can make some changes to the security options of your MySQL installation. The first prompt will ask if you want to install the Password Validation Plugin, which can be used to test your MySQL password strength. The next prompt will be to set a password for the <code>root</code> MySQL user. Enter and then confirm your secure password.</p>
+<p>You can press <code>Y</code> and then <code>ENTER</code> to accept the defaults for all subsequent questions. This will delete some anonymous users and test databases, disable remote root login.</p>
+<p>To initialize the MySQL data directory, you would use <code>mysql_install_db</code> for versions prior to 5.7.6 and mysqld –initialize for 5.7.6 and later.</p>
+<h3 id="step-3-optional-adjusting-user-authentication-and-permissions">Step 3 – (Optional) Adjusting User Authentication and Permissions<a class="headerlink" href="#step-3-optional-adjusting-user-authentication-and-permissions" title="Permanent link">&para;</a></h3>
+<p>In Ubuntu systems running MySQL 5.7 (and later), the MySQL user <strong>root</strong> is set to authenticate by use <code>auth_socket</code> plugin by default instead of with password. This allows for some greater security and usability in many cases, but it can also complicate things when you need to allow an external program (e.g. phpMyAdmin).</p>
+<p>To use a password to connect to MySQL as <strong>root</strong>, you will need to switch its authentication method from <code>auth_socket</code> to <code>mysql_native_password</code>. To do this, open MySQL from your terminal:</p>
+<p><code>sudo mysql</code></p>
+<p>Next, check what authentication method each of your MySQL user accounts uses with the following command:</p>
+<p><code>SELECT user,authentication_string,plugin ,host FROM mysql.user;</code></p>
+<p><code>+---------+--------------------- ------------------------------------------------------------+--- --------+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | | auth_socket | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+</code></p>
+<p>To configure the root account for password authentication, run the following <code>ALTER USER</code> command. Be sure to change <code>password</code> to a strong password of your choice and note that this command will change the root password you set in Step 2:</p>
+<p><code>ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password ';</code></p>
+<p>Then run <code>FLUSH PRIVILEGES;</code> to tell the server to reload the tables and put your new changes into effect:</p>
+<p><code>FLUSH PRIVILEGES;</code></p>
+<p>Check the authentication methods used by each of your users again to confirm that root is no longer authenticating using the <code>auth_socket</code> plugin:</p>
+<p><code>SELECT user,authentication_string,plugin,host FROM mysql.user;</code></p>
+<p><code>+------- -----------+--------------------------------------------------------- -----+-----------------------+------+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | *9DB839FF16B82668003976BF5BA0AB42F870745F | mysql_native_password | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+</code></p>
+<p>You can see in this example output that <code>root</code> user MySQL now authenticates with a password. Once you confirm this on your own server, you can exit the MySQL shell: <code>exit</code></p>
+<p>To create a new user, open mysql again:</p>
+<p><code>sudo mysql</code></p>
+<p><strong>Note:</strong> If you If you have enabled password authentication for <code>root</code> instead of using the <code>auth_socket</code> plugin, as described in the previous paragraphs you will need to use a different command to access the MySQL shell. The following will run your MySQL client with normal user privileges and you will only get administrator privileges in the database by authenticating:</p>
+<p><code>mysql -u root -p</code></p>
+<p>Enter password and Enter.</p>
+<p>Then, create a new user and give it a password:</p>
+<p><code>CREATE USER 'ntc'@'localhost' IDENTIFIED BY 'pass';</code></p>
+<p>List it out:</p>
+<p><code>SELECT user,authentication_string,plugin,host FROM mysql .user;</code></p>
+<p><code>+-------------------+------------------------- -------------------------------------------------------------------------- ----+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | *9DB839FF16B82668003976BF5BA0AB42F870745F | mysql_native_password | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | | ntc | *5403678D7E10A9C8DC490C129FAF5C10BF0F95EE | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+ 5 rows in set (0.00 sec)</code></p>
+<p>Next is to grant your new user the appropriate privileges. For example, you can grant user privileges to all tables in the database, as well as add, edit, and remove user permissions, with this command:</p>
+<p><code>GRANT ALL PRIVILEGES ON *.* TO 'ntc '@'localhost' WITH GRANT OPTION;</code></p>
+<p>Note that, at this point, you do not need to run the <code>FLUSH PRIVILEGES</code> command again. This command is only needed when you modify level tables using statements such as <code>INSERT</code>, <code>UPDATE</code> or <code>DELETE</code>. Since you have already created a new user, instead of modifying an existing user, <code>FLUSH PRIVILEGES</code> is not needed.</p>
+<p>Exit mysql: <code>exit;</code>. Finally, check the MySQL settings.</p>
+<h3 id="step-4-testing-mysql">Step 4 – Testing MySQL<a class="headerlink" href="#step-4-testing-mysql" title="Permanent link">&para;</a></h3>
+<p>Regardless of how you installed it, MySQL will start running automatically. To check this, check its status.</p>
+<p><code>systemctl status mysql.service</code></p>
+<p>If MySQL is not running, you can start it with <code>sudo systemctl start mysql</code>.</p>
+<p>Create a new database named wordpress with the following command:</p>
+<p><code>CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</code></p>
+<p>Show databases:</p>
+<p><code>show databases;</code></p>
+<p><code>+-------------- ------+ | Database | +--------------------+ | information_schema | | mysql | | performance_schema | | sys | | wordpress | +--------------------+ 5 rows in set (0.00 sec)</code></p>
+<p>Allows a new user to be allowed to access this database.</p>
+<p><code>GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'localhost';</code></p>
+<p>or create a new user and give database access:</p>
+<p><code>GRANT ALL ON database_name.* TO 'username'@'localhost' IDENTIFIED BY 'password';</code></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../installingbuildahandpodman/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installing buildah and podman on Ubuntu" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Installing buildah and podman on Ubuntu
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../s3lifecycleextend/" class="md-footer__link md-footer__link--next" aria-label="Next: S3 Lifecycle Extend" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              S3 Lifecycle Extend
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2022 Factech Docs
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  </body>
+</html>

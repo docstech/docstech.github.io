@@ -1,0 +1,51 @@
+body {
+    font-family: Lato,proxima-nova,Helvetica Neue,Arial,sans-serif;
+    font-weight: 400;
+    color: #e4e6eb;
+    min-height: 100%;
+    background: #edf0f2;
+}
+:root {
+    --md-primary-fg-color:        #ac1622;
+    --md-primary-fg-color--light: #ECB7B7;
+    --md-primary-fg-color--dark:  #90030C;
+  }
+
+.wy-nav-side {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 2em;
+    width: 300px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-height: 100%;
+    color: #9b9b9b;
+    background: #242526;
+    z-index: 200;
+}
+
+.md-header {
+    background-color: #1670ac;
+}
+.wy-nav-content {
+    margin: auto;
+    background: #242526;
+}
+
+.wy-nav-content {
+    padding: 1.618em 3.236em;
+    height: 100%;
+    max-width: 80%;
+    margin: auto;
+}
+.wy-nav-content-wrap  {
+    background: rgb(24 25 26);
+}
+
+
+li {
+    list-style: none;
+    color: #999;
+}

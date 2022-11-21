@@ -1,0 +1,832 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Docs Tech">
+      
+      
+        <link rel="canonical" href="https://docstech.github.io/cephbasedstoragetoakubernetescluster/">
+      
+      <link rel="icon" href="..">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Ceph-based storage to a Kubernetes cluster - Docs tech</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ceph-based-storage-to-a-kubernetes-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Docs tech" class="md-header__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Docs tech
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ceph-based storage to a Kubernetes cluster
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Docs tech" class="md-nav__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Docs tech
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ceph-s3-intelligent-tiering-lifecycle-management/" class="md-nav__link">
+        S3 Intelligent Tiering vs. Lifecycle Management
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Ceph-based storage to a Kubernetes cluster
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Ceph-based storage to a Kubernetes cluster
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-example-of-connecting-ceph-based-storage-to-a-kubernetes-cluster" class="md-nav__link">
+    A practical example of connecting Ceph-based storage to a Kubernetes cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check" class="md-nav__link">
+    Check
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-eyes-are-afraid-but-the-hands-are-doing" class="md-nav__link">
+    The eyes are afraid, but the hands are doing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installingbuildahandpodman/" class="md-nav__link">
+        Installing buildah and podman on Ubuntu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installmysql/" class="md-nav__link">
+        Installing MySQL on Ubuntu 18.04
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3lifecycleextend/" class="md-nav__link">
+        S3 Lifecycle Extend
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-example-of-connecting-ceph-based-storage-to-a-kubernetes-cluster" class="md-nav__link">
+    A practical example of connecting Ceph-based storage to a Kubernetes cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check" class="md-nav__link">
+    Check
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-eyes-are-afraid-but-the-hands-are-doing" class="md-nav__link">
+    The eyes are afraid, but the hands are doing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/docstech/edit/master/docs/cephbasedstoragetoakubernetescluster.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="ceph-based-storage-to-a-kubernetes-cluster">Ceph-based storage to a Kubernetes cluster<a class="headerlink" href="#ceph-based-storage-to-a-kubernetes-cluster" title="Permanent link">&para;</a></h1>
+<h2 id="a-practical-example-of-connecting-ceph-based-storage-to-a-kubernetes-cluster">A practical example of connecting Ceph-based storage to a Kubernetes cluster<a class="headerlink" href="#a-practical-example-of-connecting-ceph-based-storage-to-a-kubernetes-cluster" title="Permanent link">&para;</a></h2>
+<p>So, you have a Kubernetes cluster at hand, deployed, for example, <a href="https://github.com/kubernetes-sigs/kubespray">kubespray</a>. A Ceph cluster works nearby - you can also install it, for example, with this <a href="https://github.com/ceph/ceph-ansible">set of playbooks</a>. I hope I don't need to mention that for production, there must be a network between them with a bandwidth of at least 10 Gb / s.</p>
+<p>If you have all this, let's go!</p>
+<p>First, let's go to one of the nodes of the Ceph cluster and check that everything is in order:</p>
+<div class="highlight"><pre><span></span><code>ceph health
+ceph -s
+</code></pre></div>
+<p>Next, we will immediately create a pool for RBD disks:</p>
+<div class="highlight"><pre><span></span><code>ceph osd pool create kube 32
+ceph osd pool application enable kube rbd
+</code></pre></div>
+<p>Let's go to the Kubernetes cluster. There, first of all, we will install the Ceph CSI driver for RBD. We will install, as expected, through Helm.<br />
+Add a repository with a chart, get a set of ceph-csi-rbd chart variables:</p>
+<div class="highlight"><pre><span></span><code>helm repo add ceph-csi https://ceph.github.io/csi-charts
+helm inspect values ​​ceph-csi/ceph-csi-rbd &gt; cephrbd.yml
+</code></pre></div>
+<p>Now you need to fill in the cephrbd.yml file. To do this, we find out the cluster ID and IP addresses of monitors in Ceph:</p>
+<div class="highlight"><pre><span></span><code>ceph fsid # this is how we get the clusterID
+ceph mon dump # this is how we see the IP addresses of the monitors
+</code></pre></div>
+<p>The resulting values ​​are entered into the cephrbd.yml file. Along the way, we enable the creation of PSP policies (Pod Security Policies). The options in the <strong>nodeplugin</strong> and <strong>provisioner</strong> sections are already in the file, you can fix them as shown below:</p>
+<div class="highlight"><pre><span></span><code>csiConfig:
+  - clusterID: &quot;bcd0d202-fba8-4352-b25d-75c89258d5ab&quot;
+    monitors:
+      - &quot;v2:172.18.8.5:3300/0,v1:172.18.8.5:6789/0&quot;
+      - &quot;v2:172.18.8.6:3300/ 0,v1:172.18.8.6:6789/0&quot;
+      - &quot;v2:172.18.8.7:3300/0,v1:172.18.8.7:6789/0&quot;
+
+nodeplugin:
+  subSecurityPolicy:
+    enabled: true
+
+provisioner:
+  podSecurityPolicy:
+    enabled: true
+</code></pre></div>
+<p>Then all that remains for us is to install the chart in the Kubernetes cluster.</p>
+<div class="highlight"><pre><span></span><code>helm upgrade -i ceph-csi-rbd ceph-csi/ceph-csi-rbd -f cephrbd.yml -n ceph-csi-rbd --create-namespace
+</code></pre></div>
+<p>Great, the RBD driver works!<br />
+Let's create a new StorageClass in Kubernetes. This again requires some work with Ceph.</p>
+<p>Create a new user in Ceph and grant him write access to the <strong>kube</strong> pool:</p>
+<div class="highlight"><pre><span></span><code>ceph auth get-or-create client.rbdkube mon &#39;profile rbd&#39; osd &#39;profile rbd pool=kube&#39;
+</code></pre></div>
+<p>And now let's see the access key is still there:</p>
+<div class="highlight"><pre><span></span><code>ceph auth get-key client.rbdkube
+</code></pre></div>
+<p>The command will output something like this:</p>
+<div class="highlight"><pre><span></span><code>AQCO9NJbhYipKRAAMqZsnqqS/T8OYQX20xIa9A==
+</code></pre></div>
+<p>Let's put this value in Secret in the Kubernetes cluster - where <strong>userKey</strong> is needed:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: csi-rbd-secret
+  namespace: ceph-csi-rbd
+stringData:
+  # The key values ​​correspond to the username and its key, as specified in
+  # the Ceph cluster. The user ID must have access to the pool
+  # specified in storage class
+  userID: rbdkube
+  userKey: &lt;user-key&gt;
+</code></pre></div>
+<p>And we create our secret:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f secret.yaml
+</code></pre></div>
+<p>Next, we need something like this StorageClass manifest:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: csi-rbd-sc
+provisioner: rbd.csi.ceph.com
+parameters:
+   clusterID: &lt;cluster-id&gt;
+   pool: kube
+
+   image Features: layering
+
+   # These secrets should contain data to authorize
+   # into your pool.
+   csi.storage.k8s.io/provisioner-secret-name: csi-rbd-secret
+   csi.storage.k8s.io/provisioner-secret-namespace: ceph-csi-rbd
+   csi.storage.k8s.io/controller-expand- secret-name: csi-rbd-secret
+   csi.storage.k8s.io/controller-expand-secret-namespace: ceph-csi-rbd
+   csi.storage.k8s.io/node-stage-secret-name: csi-rbd- secret
+   csi.storage.k8s.io/node-stage-secret-namespace: ceph-csi-rbd
+
+   csi.storage.k8s.io/fstype:ext4
+
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+mountOptions:
+  - discard
+</code></pre></div>
+<p>We need to fill in <strong>clusterID</strong>, which we already learned with the <em>ceph fsid</em> command, and apply this manifest in the Kubernetes cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f storageclass.yaml
+</code></pre></div>
+<p>To check the operation of clusters in a bundle, let's create the following PVC (Persistent Volume Claim):</p>
+<div class="highlight"><pre><span></span><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rbd-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: csi-rbd-sc
+</code></pre></div>
+<p>Let's immediately see how Kubernetes created the requested volume in Ceph:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pvc
+kubectl get pv
+</code></pre></div>
+<p>Everything seems to be great! And what does it look like on the Ceph side?<br />
+We get a list of volumes in the pool and view information about our volume:</p>
+<div class="highlight"><pre><span></span><code>rbd ls -p kube
+rbd -p kube info csi-vol-eb3d257d-8c6c-11ea-bff5-6235e7640653 # here, of course, there will be a different volume ID that the previous command issued
+</code></pre></div>
+<p>Now let's see how RBD volume resizing works.<br />
+Change the volume size in the pvc.yaml manifest to 2Gi and apply it:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f pvc.yaml
+</code></pre></div>
+<p>Let's wait for the changes to take effect and take another look at the volume size.</p>
+<div class="highlight"><pre><span></span><code>rbd -p kube info csi-vol-eb3d257d-8c6c-11ea-bff5-6235e7640653
+
+kubectl get pv
+kubectl get pvc
+</code></pre></div>
+<p>We see that the size of the PVC has not changed. You can ask Kubernetes for a description of the PVC in YAML format to find out why:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pvc rbd-pvc -o yaml
+</code></pre></div>
+<p>And here is the problem:</p>
+<p><em>message: Waiting for user to (re-)start a pod to finish file system resize of volume on node. type: FileSystemResizePending</em></p>
+<p>That is, the disk has grown, but the file system on it has not.<br />
+To expand the file system, you need to mount the volume. In our case, the created PVC / PV is not used in any way now.</p>
+<p>We can create a test Pod like this:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csi-rbd-demo-pod
+spec:
+  containers:
+    - name: web-server
+      image: nginx:1.17.6
+      volumeMounts:
+        - name: mypvc
+          mountPath: /data
+  volumes:
+    - name: mypvc
+      persistentVolumeClaim:
+        claimName: rbd-pvc
+        readOnly: false
+</code></pre></div>
+<p>And now let's look at PVC:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pvc
+</code></pre></div>
+<p>The size has changed, everything is in order.</p>
+<p>In the first part, we worked with the RBD block device (it stands for Rados Block Device), but this cannot be done if you want to work with this disk of different microservices at the same time. For working with files, rather than with a disk image, CephFS is much better suited.<br />
+Using the example of Ceph and Kubernetes clusters, we will configure CSI and other necessary entities to work with CephFS.</p>
+<p>Let's get the values ​​from the new Helm chart we need:</p>
+<div class="highlight"><pre><span></span><code>helm inspect values ​​ceph-csi/ceph-csi-cephfs &gt; cephfs.yml
+</code></pre></div>
+<p>Again, you need to fill in the cephfs.yml file. As before, the Ceph commands will help:</p>
+<div class="highlight"><pre><span></span><code>ceph fsid
+ceph mon dump
+</code></pre></div>
+<p>We fill the file with values ​​like this:</p>
+<div class="highlight"><pre><span></span><code>csiConfig:
+  - clusterID: &quot;bcd0d202-fba8-4352-b25d-75c89258d5ab&quot;
+    monitors:
+      - &quot;172.18.8.5:6789&quot;
+      - &quot;172.18.8.6:6789&quot;
+      - &quot;172.18.8.7:6789&quot;
+
+nodeplugin:
+  httpMetrics:
+    enabled: true
+    containerPort: 8091
+  podSecurityPolicy:
+    enabled: true
+
+provisioner:
+  replicaCount: 1
+  podSecurityPolicy:
+    enabled: true
+</code></pre></div>
+<p>Note that monitor addresses are specified in the simple form address:port. To mount cephfs on the host, these addresses are passed to a kernel module that does not yet know how to work with the monitor protocol v2.<br />
+We change the port for httpMetrics (Prometheus will go there for monitoring metrics) so that it does not conflict with nginx-proxy, which is installed by Kubespray. You may not need this.</p>
+<p>Install Helm chart in Kubernetes cluster:</p>
+<div class="highlight"><pre><span></span><code>helm upgrade -i ceph-csi-cephfs ceph-csi/ceph-csi-cephfs -f cephfs.yml -n ceph-csi-cephfs --create-namespace
+</code></pre></div>
+<p>Let's move on to the Ceph data store to create a separate user there. The documentation states that the CephFS provider needs cluster administrator access rights. But we will create a separate <em>fs</em> user with limited rights:</p>
+<div class="highlight"><pre><span></span><code>ceph auth get-or-create client.fs mon &#39;allow r&#39; mgr &#39;allow rw&#39; mds &#39;allow rws&#39; osd &#39;allow rw pool=cephfs_data, allow rw pool=cephfs_metadata&#39;
+</code></pre></div>
+<p>And immediately let's see its access key, it will be useful to us further:</p>
+<div class="highlight"><pre><span></span><code>ceph auth get-key client.fs
+</code></pre></div>
+<p>Let's create separate Secret and StorageClass.<br />
+Nothing new, we have already seen this with the example of RBD:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: csi-cephfs-secret
+  namespace: ceph-csi-cephfs
+stringData:
+  # Required for dynamically created volumes
+  adminID: fs
+  adminKey: &lt;previous command output&gt;
+</code></pre></div>
+<p>Applying the manifest:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f secret.yaml
+</code></pre></div>
+<p>And now - a separate StorageClass:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: csi-cephfs-sc
+provisioner: cephfs.csi.ceph.com
+parameters:
+  clusterID: &lt;cluster-id&gt;
+
+  # Name of the CephFS file system where the volume will be created
+  fsName: cephfs
+
+  # (optional) The Ceph pool where the volume data will be stored
+  # pool: cephfs_data
+
+  # (optional) Ceph-fuse comma-separated mount options
+  # ex:
+  # fuseMountOptions: debug
+
+  # (optional) Comma-separated CephFS kernel mount options
+  # See man mount.ceph for a list of these options. For example:
+  # kernelMountOptions: readdir_max_bytes=1048576,norbytes
+
+  # Secrets must contain permissions for the Ceph admin and/or user.
+  csi.storage.k8s.io/provisioner-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: ceph-csi-cephfs
+  csi.storage.k8s.io/controller-expand- secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: ceph-csi-cephfs
+  csi.storage.k8s.io/node-stage-secret-name: csi-cephfs- secret
+  csi.storage.k8s.io/node-stage-secret-namespace: ceph-csi-cephfs
+
+  # (optional) The driver can use either ceph-fuse (fuse), 
+  # or ceph kernelclient (kernel).
+  # If not specified, default volume mounts will be used,
+  # determined by searching ceph-fuse and mount.ceph
+  # mounter: kernel
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+mountOptions:
+  - debug
+</code></pre></div>
+<p>Fill in <strong>clusterID</strong> here and apply it in Kubernetes:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f storageclass.yaml
+</code></pre></div>
+<h2 id="check">Check<a class="headerlink" href="#check" title="Permanent link">&para;</a></h2>
+<p>To check, as in the previous example, let's create a PVC:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: csi-cephfs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: csi-cephfs-sc
+</code></pre></div>
+<p>And check for PVC/PV:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pvc
+kubectl get pv
+</code></pre></div>
+<p>If you want to look at the files and directories in CephFS, you can mount this file system somewhere. For example, as shown below.</p>
+<p>We go to one of the nodes of the Ceph cluster and perform the following actions:</p>
+<div class="highlight"><pre><span></span><code># Mount point
+mkdir -p /mnt/cephfs
+
+# Create a file with the
+ceph auth admin key get-key client.admin &gt;/etc/ceph/secret.key
+
+# Add an entry to /etc/fstab
+# !! Change the ip address to our node address
+echo &quot;172.18.8.6:6789:/ /mnt/cephfs ceph name=admin,secretfile=/etc/ceph/secret.key,noatime,_netdev 0 2&quot; &gt;&gt; /etc/fstab
+
+mount /mnt/cephfs
+</code></pre></div>
+<p>Of course, this FS mount on a Ceph node is only suitable for educational purposes,. I don't think anyone would do this in production, there's a big risk of accidentally overwriting important files.</p>
+<p>And finally, let's check how things work with volume resizing in the case of CephFS. We return to Kubernetes and edit our manifest for PVC - we increase the size there, for example, to 7Gi.</p>
+<p>Apply the edited file:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f pvc.yaml
+</code></pre></div>
+<p>Let's see how the quota has changed on the mounted directory:</p>
+<div class="highlight"><pre><span></span><code>getfattr -n ceph.quota.max_bytes &lt;data-directory&gt;
+</code></pre></div>
+<p>You may need to install the <strong>attr</strong> package on your system for this command to work.</p>
+<h2 id="the-eyes-are-afraid-but-the-hands-are-doing">The eyes are afraid, but the hands are doing<a class="headerlink" href="#the-eyes-are-afraid-but-the-hands-are-doing" title="Permanent link">&para;</a></h2>
+<p>On the surface, all these spells and long YAML manifests seem complicated, but in practice, Slurm students deal with them pretty quickly.<br />
+In this article, we did not delve into the wilds - there is official documentation for this. If you are interested in the details of setting up Ceph storage with a Kubernetes cluster, these links will help:</p>
+<p><a href="https://kubernetes.io/docs/concepts/storage/volumes/">General principles of Kubernetes with volumes</a><br />
+<a href="https://ceph.readthedocs.io/en/latest/rbd/">RDD documentation</a><br />
+<a href="https://docs.ceph.com/docs/master/rbd/rbd-kubernetes/"> Integrating RBD and Kubernetes from a Ceph Perspective</a><br />
+<a href="https://github.com/ ceph/ceph-csi/blob/master/docs/deploy-rbd.md">Integrating RBD and Kubernetes from a CSI Perspective</a><br />
+<a href="https://ceph.readthedocs.io/en/latest/cephfs/">General CephFS documentation</a><br />
+<a href="https://github.com/ceph/ceph-csi/blob/master/docs/deploy-cephfs.md">CephFS and Kubernetes integration from a CSI</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../ceph-s3-intelligent-tiering-lifecycle-management/" class="md-footer__link md-footer__link--prev" aria-label="Previous: S3 Intelligent Tiering vs. Lifecycle Management" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              S3 Intelligent Tiering vs. Lifecycle Management
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../installingbuildahandpodman/" class="md-footer__link md-footer__link--next" aria-label="Next: Installing buildah and podman on Ubuntu" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Installing buildah and podman on Ubuntu
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2022 Factech Docs
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  </body>
+</html>

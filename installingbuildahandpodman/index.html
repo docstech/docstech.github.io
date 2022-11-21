@@ -1,0 +1,838 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Docs Tech">
+      
+      
+        <link rel="canonical" href="https://docstech.github.io/installingbuildahandpodman/">
+      
+      <link rel="icon" href="..">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Installing buildah and podman on Ubuntu - Docs tech</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-buildah-and-podman-on-ubuntu" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Docs tech" class="md-header__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Docs tech
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installing buildah and podman on Ubuntu
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Docs tech" class="md-nav__button md-logo" aria-label="Docs tech" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Docs tech
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/docstech" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ceph-s3-intelligent-tiering-lifecycle-management/" class="md-nav__link">
+        S3 Intelligent Tiering vs. Lifecycle Management
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cephbasedstoragetoakubernetescluster/" class="md-nav__link">
+        Ceph-based storage to a Kubernetes cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installing buildah and podman on Ubuntu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Installing buildah and podman on Ubuntu
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prereq-packages" class="md-nav__link">
+    prereq packages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-repo-and-signing-key" class="md-nav__link">
+    add repo and signing key
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-buildah-and-podman" class="md-nav__link">
+    install buildah and podman
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-known-issue-11745-with-machine-entry" class="md-nav__link">
+    fix known issue 11745 with [machine] entry
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanity-test" class="md-nav__link">
+    sanity test
+  </a>
+  
+    <nav class="md-nav" aria-label="sanity test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-image-with-buildah" class="md-nav__link">
+    Create image with buildah
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-base-image" class="md-nav__link">
+    define base image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-custom-content" class="md-nav__link">
+    copy custom content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outward-facing-default-port" class="md-nav__link">
+    outward facing default port
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-into-local-repository" class="md-nav__link">
+    commit into local repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-local-image-with-podman" class="md-nav__link">
+    Run local image with podman
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-running-image" class="md-nav__link">
+    Validate running image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    Cleanup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-build-from-dockerfile" class="md-nav__link">
+    Alternative: build from Dockerfile
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-tagging-with-both-latest-and-10-tags" class="md-nav__link">
+    example of tagging with both 'latest' and '1.0' tags
+  </a>
+  
+    <nav class="md-nav" aria-label="example of tagging with both 'latest' and '1.0' tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-image-to-docker-hub" class="md-nav__link">
+    Push image to Docker Hub
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installmysql/" class="md-nav__link">
+        Installing MySQL on Ubuntu 18.04
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3lifecycleextend/" class="md-nav__link">
+        S3 Lifecycle Extend
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prereq-packages" class="md-nav__link">
+    prereq packages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-repo-and-signing-key" class="md-nav__link">
+    add repo and signing key
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-buildah-and-podman" class="md-nav__link">
+    install buildah and podman
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-known-issue-11745-with-machine-entry" class="md-nav__link">
+    fix known issue 11745 with [machine] entry
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanity-test" class="md-nav__link">
+    sanity test
+  </a>
+  
+    <nav class="md-nav" aria-label="sanity test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-image-with-buildah" class="md-nav__link">
+    Create image with buildah
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-base-image" class="md-nav__link">
+    define base image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-custom-content" class="md-nav__link">
+    copy custom content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outward-facing-default-port" class="md-nav__link">
+    outward facing default port
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-into-local-repository" class="md-nav__link">
+    commit into local repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-local-image-with-podman" class="md-nav__link">
+    Run local image with podman
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-running-image" class="md-nav__link">
+    Validate running image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    Cleanup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-build-from-dockerfile" class="md-nav__link">
+    Alternative: build from Dockerfile
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-tagging-with-both-latest-and-10-tags" class="md-nav__link">
+    example of tagging with both 'latest' and '1.0' tags
+  </a>
+  
+    <nav class="md-nav" aria-label="example of tagging with both 'latest' and '1.0' tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-image-to-docker-hub" class="md-nav__link">
+    Push image to Docker Hub
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/docstech/edit/master/docs/installingbuildahandpodman.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="installing-buildah-and-podman-on-ubuntu">Installing buildah and podman on Ubuntu<a class="headerlink" href="#installing-buildah-and-podman-on-ubuntu" title="Permanent link">&para;</a></h1>
+<p><a href="https://fabianlee.org/2022/08/02/buildah-installing-buildah-and-podman-on-ubuntu-20-04/" title="Buildah: Installing buildah and podman on Ubuntu 20.04">Buildah: Installing buildah and podman on Ubuntu 20.04</a></p>
+<p><img alt="" src="https://fabianlee.org/wp-content/uploads/2022/08/buildah-logo.png" /><a href="https://buildah.io/">buildah</a> 
+is a tool that can create OCI compatible (Docker) images without the Docker daemon.  <a href="https://podman.io/">podman</a> can run these images without the need for a Docker daemon.</p>
+<p>The buildah and podman packages are available on the Debian <a href="https://github.com/containers/buildah/blob/main/install.md#debian">Bullseye</a> testing branch, but are not available from an Ubuntu 20.04 LTS release because these test packages could break the library compatibilities of the overall system.</p>
+<p>So instead, we will add the targeted remote repository as shown below.</p>
+<h2 id="prereq-packages">prereq packages<a class="headerlink" href="#prereq-packages" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo apt-get update
+sudo apt-get install -y wget ca-certificates gnupg2
+</code></pre></div>
+<h2 id="add-repo-and-signing-key">add repo and signing key<a class="headerlink" href="#add-repo-and-signing-key" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>VERSION\_ID=$(lsb\_release -r | cut -f2)
+echo &quot;deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu\_${VERSION\_ID}/ /&quot; | sudo tee /etc/apt/sources.list.d/devel-kubic-libcontainers-stable.list
+curl -Ls https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu\_$VERSION\_ID/Release.key | sudo apt-key add -
+sudo apt-get update
+</code></pre></div>
+<h2 id="install-buildah-and-podman">install buildah and podman<a class="headerlink" href="#install-buildah-and-podman" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo apt install buildah podman -y
+</code></pre></div>
+<h2 id="fix-known-issue-11745-with-machine-entry">fix known issue 11745 with [machine] entry<a class="headerlink" href="#fix-known-issue-11745-with-machine-entry" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo sed -i &#39;s/^\\\[machine\\\]$/#\\\[machine\\\]/&#39; /usr/share/containers/containers.conf
+</code></pre></div>
+<p>Smoke test the installation with the following commands.</p>
+<h2 id="sanity-test">sanity test<a class="headerlink" href="#sanity-test" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>buildah version
+podman version
+</code></pre></div>
+<h3 id="create-image-with-buildah">Create image with buildah<a class="headerlink" href="#create-image-with-buildah" title="Permanent link">&para;</a></h3>
+<p>To test buildah, we will create a small NGINX container that delivers custom content.</p>
+<p><strong>Create custom index.html</strong></p>
+<div class="highlight"><pre><span></span><code>echo &#39;Hello world!&#39; &gt; /tmp/index.html
+</code></pre></div>
+<p><strong>Pull base NGINX image</strong></p>
+<div class="highlight"><pre><span></span><code>buildah pull docker.io/nginx:1.23.1-alpine
+
+$ buildah images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+docker.io/library/nginx 1.23.1-alpine e46bcc697531 13 days ago 25 MB
+</code></pre></div>
+<p><strong>Build and commit image</strong></p>
+<h3 id="define-base-image">define base image<a class="headerlink" href="#define-base-image" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>nginx_id=$(buildah from docker.io/nginx:1.23.1-alpine)
+</code></pre></div>
+<h3 id="copy-custom-content">copy custom content<a class="headerlink" href="#copy-custom-content" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>buildah copy $nginx\_id /tmp/index.html /usr/share/nginx/html
+</code></pre></div>
+<h3 id="outward-facing-default-port">outward facing default port<a class="headerlink" href="#outward-facing-default-port" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>buildah config --port 8080 $nginx\_id
+</code></pre></div>
+<h3 id="commit-into-local-repository">commit into local repository<a class="headerlink" href="#commit-into-local-repository" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>buildah commit $nginx\_id nginx-alpine-custom
+
+$ buildah images
+| REPOSITORY                      | TAG             | IMAGE ID       | CREATED         | SIZE  |
+| ------------------------------- | --------------- | -------------- | --------------- | ----- |
+| localhost/nginx-alpine-custom   | latest          | 94d26c327087   | 3 seconds ago   | 25 MB |
+| ------------------------------- | --------------- | -------------- | --------------- | ----- |
+| docker.io/library/nginx         | 1.23.1-alpine   | e46bcc697531   | 13 days ago     | 25 MB |
+| ------------------------------- | --------------- | -------------- | --------------- | ----- |
+</code></pre></div>
+<h3 id="run-local-image-with-podman">Run local image with podman<a class="headerlink" href="#run-local-image-with-podman" title="Permanent link">&para;</a></h3>
+<p>With the image now in the local repository, we can reference and run it with podman directly.</p>
+<div class="highlight"><pre><span></span><code>podman run -p 8080:80 --name nginxtest localhost/nginx-alpine-custom:latest
+</code></pre></div>
+<p>This will start a container in the foreground, exposing port 8080 to our host.</p>
+<h3 id="validate-running-image">Validate running image<a class="headerlink" href="#validate-running-image" title="Permanent link">&para;</a></h3>
+<p>From another console, run a simple curl to port 8080 to see the custom index.html content we placed into the image.</p>
+<div class="highlight"><pre><span></span><code>$ curl http://localhost:8080/index.html
+Hello world!
+</code></pre></div>
+<h3 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link">&para;</a></h3>
+<p>this command OR Ctrl-C from console where it is running in foreground</p>
+<div class="highlight"><pre><span></span><code>podman stop nginxtest
+</code></pre></div>
+<p>remove exited container</p>
+<div class="highlight"><pre><span></span><code>podman rm nginxtest
+</code></pre></div>
+<h3 id="alternative-build-from-dockerfile">Alternative: build from Dockerfile<a class="headerlink" href="#alternative-build-from-dockerfile" title="Permanent link">&para;</a></h3>
+<p>Running a series of buildah commands is not the only way to generate the image.  You can also use the Dockerfile format, here is the equivalent of the buildah commands run earlier.</p>
+<div class="highlight"><pre><span></span><code>$ cat Dockerfile 
+FROM docker.io/nginx:1.23.1-alpine
+COPY index.html /usr/share/nginx/html
+EXPOSE 8080
+</code></pre></div>
+<p>And the custom index.html file that needs to be located in the same directory.</p>
+<div class="highlight"><pre><span></span><code>$ cat index.html 
+Hello world from Dockerfile!
+</code></pre></div>
+<p>Then you can ‘buildah bud’ (build-using-dockerfile) using the following command.</p>
+<h2 id="example-of-tagging-with-both-latest-and-10-tags">example of tagging with both 'latest' and '1.0' tags<a class="headerlink" href="#example-of-tagging-with-both-latest-and-10-tags" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>buildah bud -f Dockerfile -t nginx-alpine-custom2:latest -t nginx-alpine-custom2:1.0
+
+$ buildah images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+localhost/nginx-alpine-custom2 latest c09a19d7737b 9 minutes ago 25 MB
+localhost/nginx-alpine-custom2 1.0 c09a19d7737b 9 minutes ago 25 MB
+</code></pre></div>
+<h3 id="push-image-to-docker-hub">Push image to Docker Hub<a class="headerlink" href="#push-image-to-docker-hub" title="Permanent link">&para;</a></h3>
+<p>If you wanted to push this image to a remote repository such as <a href="https://hub.docker.com/repositories">Docker Hub</a> at docker.io, then you need to tag the image first.</p>
+<div class="highlight"><pre><span></span><code>buildah tag localhost/springbootwithbuildah:latest docker.io/fabianlee/springbootwithbuildah:1.0
+</code></pre></div>
+<p>Then login with your Docker hub credentials and do a ‘buildah push’.</p>
+<div class="highlight"><pre><span></span><code>$ echo &#39;YourPassw0rd&#39; | buildah login --username fabianlee --password-stdin docker.io
+Login Succeeded!
+
+$ buildah push docker.io/fabianlee/springbootwithbuildah:1.0
+Getting image source signatures
+Copying blob 4a5edb57ddd4 skipped: already exists  
+Copying blob 735956b91a18 skipped: already exists  
+Copying blob f3b732ca7f91 skipped: already exists  
+Copying blob 5ce792dcacff [--------------------] 0.0b/0.0b
+Copying config 65a80bbe96 [--------------------] 0.0b/5.4KiB
+Writing manifest to image destination
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../cephbasedstoragetoakubernetescluster/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Ceph-based storage to a Kubernetes cluster" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Ceph-based storage to a Kubernetes cluster
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../installmysql/" class="md-footer__link md-footer__link--next" aria-label="Next: Installing MySQL on Ubuntu 18.04" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Installing MySQL on Ubuntu 18.04
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2022 Factech Docs
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  </body>
+</html>
