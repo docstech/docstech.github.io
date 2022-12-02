@@ -17,7 +17,7 @@
     
     
       
-        <title>Howtobuildpodmanversion - Docs tech</title>
+        <title>How to install Podman in Debian/ubuntu - Docs tech</title>
       
     
     
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Howtobuildpodmanversion
+              How to install Podman in Debian/ubuntu
             
           </span>
         </div>
@@ -278,7 +278,7 @@
       
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Howtobuildpodmanversion
+        How to install Podman in Debian/ubuntu
       </a>
       
     </li>
@@ -369,6 +369,7 @@
 
 
 <h1 id="how-to-install-podman-in-debianubuntu">How to install Podman in Debian/ubuntu<a class="headerlink" href="#how-to-install-podman-in-debianubuntu" title="Permanent link">&para;</a></h1>
+<p>======================================</p>
 <hr />
 <p><strong>podman</strong> is a tool for managing (Kubernetes) pods, containers and container images, available from <a href="https://github.com/containers/libpod">https://github.com/containers/libpod</a></p>
 <p>To install <code>podman</code> from scratch in Debian/ubuntu we need to have the below requirement met</p>
@@ -459,14 +460,13 @@ curl -qsSL https://raw.githubusercontent.com/containers/libpod/master/cni/87-pod
 <div class="highlight"><pre><span></span><code>cni_config_dir = &quot;/etc/cni/net.d/&quot;
 </code></pre></div>
 <ul>
-<li>
-<p>Install CNI Plugins</p>
-<p>cd ~
+<li>Install CNI Plugins<div class="highlight"><pre><span></span><code>cd ~
 git clone https://github.com/containernetworking/plugins.git $GOPATH/src/github.com/containernetworking/plugins
 cd $GOPATH/src/github.com/containernetworking/plugins
 ./build_linux.sh
 sudo mkdir -p /usr/libexec/cni
-sudo cp bin/* /usr/libexec/cni</p>
+sudo cp bin/* /usr/libexec/cni
+</code></pre></div>
 </li>
 </ul>
 <p>Others Directories where the CNI plugin binaries may be located</p>
