@@ -385,11 +385,12 @@
 <ul>
 <li>
 <p>First, update the system</p>
-<p>apt -y update</p>
+<div class="highlight"><pre><span></span><code>apt -y update
+</code></pre></div>
 </li>
 <li>
 <p>Install Required dependency to build various podman related go lang library</p>
-<p>apt -y install \
+<div class="highlight"><pre><span></span><code>apt -y install \
   vim \
   curl \
   gcc \
@@ -415,26 +416,28 @@
   pkg-config \
   runc \
   uidmap \
-  libapparmor-dev</p>
+  libapparmor-dev
+</code></pre></div>
 </li>
 <li>
 <p>check the runc version</p>
 </li>
 </ul>
 <p>The <code>runc</code> should at least <code>spec: 1.0.1</code> otherwise you need to build your one</p>
-<div class="highlight"><pre><span></span><code>[email protected]:~# runc -version
-runc version spec: 1.0.1-dev
+<div class="highlight"><pre><span></span><code>    [email protected]:~# runc -version
+    runc version spec: 1.0.1-dev
 </code></pre></div>
 <ul>
 <li>
 <p>install GOLANG</p>
-<p>export GOPATH=~/go
+<div class="highlight"><pre><span></span><code>export GOPATH=~/go
 git clone https://go.googlesource.com/go $GOPATH
 cd $GOPATH
 git checkout tags/go1.10.8  # optional
 cd src
 ./all.bash
-export PATH=$GOPATH/bin:$PATH</p>
+export PATH=$GOPATH/bin:$PATH
+</code></pre></div>
 </li>
 <li>
 <p>Install conmon</p>
