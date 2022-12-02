@@ -10,14 +10,14 @@
         <meta name="author" content="Docs Tech">
       
       
-        <link rel="canonical" href="https://docstech.github.io/installmysql/">
+        <link rel="canonical" href="https://docstech.github.io/howtobuildpodmanversion/">
       
       <link rel="icon" href="..">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
-        <title>Installing MySQL on Ubuntu 18.04 - Docs tech</title>
+        <title>Howtobuildpodmanversion - Docs tech</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installing-mysql-on-ubuntu-1804" class="md-skip">
+        <a href="#how-to-install-podman-in-debianubuntu" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installing MySQL on Ubuntu 18.04
+              Howtobuildpodmanversion
             
           </span>
         </div>
@@ -266,11 +266,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../howtobuildpodmanversion/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Howtobuildpodmanversion
       </a>
+      
     </li>
   
 
@@ -296,73 +306,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Installing MySQL on Ubuntu 18.04
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../installmysql/" class="md-nav__link">
         Installing MySQL on Ubuntu 18.04
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#buoc-1-cai-at-mysql" class="md-nav__link">
-    Bước 1 – Cài đặt MySQL
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-configuring-mysql" class="md-nav__link">
-    Step 2 – Configuring MySQL
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-optional-adjusting-user-authentication-and-permissions" class="md-nav__link">
-    Step 3 – (Optional) Adjusting User Authentication and Permissions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-testing-mysql" class="md-nav__link">
-    Step 4 – Testing MySQL
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -402,42 +350,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#buoc-1-cai-at-mysql" class="md-nav__link">
-    Bước 1 – Cài đặt MySQL
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-configuring-mysql" class="md-nav__link">
-    Step 2 – Configuring MySQL
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-optional-adjusting-user-authentication-and-permissions" class="md-nav__link">
-    Step 3 – (Optional) Adjusting User Authentication and Permissions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-testing-mysql" class="md-nav__link">
-    Step 4 – Testing MySQL
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -450,78 +362,200 @@
                 
                   
 
-  <a href="https://github.com/docstech/edit/master/docs/installmysql.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/docstech/edit/master/docs/howtobuildpodmanversion.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
-<h1 id="installing-mysql-on-ubuntu-1804">Installing MySQL on Ubuntu 18.04<a class="headerlink" href="#installing-mysql-on-ubuntu-1804" title="Permanent link">&para;</a></h1>
-<p><strong>Instructions for Installing MySQL on Ubuntu 18.04</strong></p>
-<p>Instructions for Installing MySQL on Ubuntu 18.04
-============================== ===========</p>
-<p>MySQL is an open source database management system, usually installed as part of a web server. -domain/cach-cai-dat-va-cau-hinh-caddy-web-server-tren-vps-ubuntu-18-04.html) LAMP Stack (Linux, Apache, MySQL, PHP / Python / Perl) . It uses a relational database and SQL (Structured Query Language) to manage its data.</p>
-<p>Installing MySQL on Ubuntu is pretty straightforward: update your packages, then install the <code>mysql-server</code> package and run the included security command.</p>
-<p><code>sudo apt update sudo apt install mysql-server sudo mysql_secure_installation</code></p>
-<p>This article will guide you through installing MySQL version 5.7 on Ubuntu 18.04.</p>
-<p><img alt="Hướng dẫn cài đặt MySQL trên Ubuntu 18.04" src="https://images.viblo.asia/5d8ad2ce-3f02-417f-b141-c1233218e0b5.png" />
-Hướng dẫn cài đặt MySQL trên Ubuntu 18.04</p>
-<h3 id="buoc-1-cai-at-mysql">Bước 1 – Cài đặt MySQL<a class="headerlink" href="#buoc-1-cai-at-mysql" title="Permanent link">&para;</a></h3>
-<p>Trên Ubuntu 18.04, only the latest version of MySQL is included in the APT package by default. At the time of writing, it's MySQL 5.7.</p>
-<p>To install it, update the packages on your server with <code>apt</code>:</p>
-<p><code>sudo apt update</code></p>
-<p>Then install the default package:</p>
-<p><code>sudo apt install mysql-server</code></p>
-<p>This command will install MySQL, but won't prompt you to set a password or make any other configuration changes. Because this makes your MySQL installation unsafe, we will address this in step 2.</p>
-<h3 id="step-2-configuring-mysql">Step 2 – Configuring MySQL<a class="headerlink" href="#step-2-configuring-mysql" title="Permanent link">&para;</a></h3>
-<p>For fresh installations, you will need to run a security script. attached. This changes some of the less secure default options for things like remote root logins and sample users. On older versions of MySQL, you also need to initialize the data directory manually, but this is done automatically with the following.</p>
-<p>Run the security script:</p>
-<p><code>sudo mysql_secure_installation</code></p>
-<p>This will take you through a series of prompts, you can make some changes to the security options of your MySQL installation. The first prompt will ask if you want to install the Password Validation Plugin, which can be used to test your MySQL password strength. The next prompt will be to set a password for the <code>root</code> MySQL user. Enter and then confirm your secure password.</p>
-<p>You can press <code>Y</code> and then <code>ENTER</code> to accept the defaults for all subsequent questions. This will delete some anonymous users and test databases, disable remote root login.</p>
-<p>To initialize the MySQL data directory, you would use <code>mysql_install_db</code> for versions prior to 5.7.6 and mysqld –initialize for 5.7.6 and later.</p>
-<h3 id="step-3-optional-adjusting-user-authentication-and-permissions">Step 3 – (Optional) Adjusting User Authentication and Permissions<a class="headerlink" href="#step-3-optional-adjusting-user-authentication-and-permissions" title="Permanent link">&para;</a></h3>
-<p>In Ubuntu systems running MySQL 5.7 (and later), the MySQL user <strong>root</strong> is set to authenticate by use <code>auth_socket</code> plugin by default instead of with password. This allows for some greater security and usability in many cases, but it can also complicate things when you need to allow an external program (e.g. phpMyAdmin).</p>
-<p>To use a password to connect to MySQL as <strong>root</strong>, you will need to switch its authentication method from <code>auth_socket</code> to <code>mysql_native_password</code>. To do this, open MySQL from your terminal:</p>
-<p><code>sudo mysql</code></p>
-<p>Next, check what authentication method each of your MySQL user accounts uses with the following command:</p>
-<p><code>SELECT user,authentication_string,plugin ,host FROM mysql.user;</code></p>
-<p><code>+---------+--------------------- ------------------------------------------------------------+--- --------+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | | auth_socket | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+</code></p>
-<p>To configure the root account for password authentication, run the following <code>ALTER USER</code> command. Be sure to change <code>password</code> to a strong password of your choice and note that this command will change the root password you set in Step 2:</p>
-<p><code>ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password ';</code></p>
-<p>Then run <code>FLUSH PRIVILEGES;</code> to tell the server to reload the tables and put your new changes into effect:</p>
-<p><code>FLUSH PRIVILEGES;</code></p>
-<p>Check the authentication methods used by each of your users again to confirm that root is no longer authenticating using the <code>auth_socket</code> plugin:</p>
-<p><code>SELECT user,authentication_string,plugin,host FROM mysql.user;</code></p>
-<p><code>+------- -----------+--------------------------------------------------------- -----+-----------------------+------+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | *9DB839FF16B82668003976BF5BA0AB42F870745F | mysql_native_password | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+</code></p>
-<p>You can see in this example output that <code>root</code> user MySQL now authenticates with a password. Once you confirm this on your own server, you can exit the MySQL shell: <code>exit</code></p>
-<p>To create a new user, open mysql again:</p>
-<p><code>sudo mysql</code></p>
-<p><strong>Note:</strong> If you If you have enabled password authentication for <code>root</code> instead of using the <code>auth_socket</code> plugin, as described in the previous paragraphs you will need to use a different command to access the MySQL shell. The following will run your MySQL client with normal user privileges and you will only get administrator privileges in the database by authenticating:</p>
-<p><code>mysql -u root -p</code></p>
-<p>Enter password and Enter.</p>
-<p>Then, create a new user and give it a password:</p>
-<p><code>CREATE USER 'ntc'@'localhost' IDENTIFIED BY 'pass';</code></p>
-<p>List it out:</p>
-<p><code>SELECT user,authentication_string,plugin,host FROM mysql .user;</code></p>
-<p><code>+-------------------+------------------------- -------------------------------------------------------------------------- ----+ | user | authentication_string | plugin | host | +---------------------------------------------- -------------+-----------------------+-------+ | root | *9DB839FF16B82668003976BF5BA0AB42F870745F | mysql_native_password | localhost | | mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | mysql.sys | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost | | debian-sys-maint | *FE8A77A22D490EAEDE9F4402E318F023C476EAD8 | mysql_native_password | localhost | | ntc | *5403678D7E10A9C8DC490C129FAF5C10BF0F95EE | mysql_native_password | localhost | +---------------------------------------------- -------------+-----------------------+-------+ 5 rows in set (0.00 sec)</code></p>
-<p>Next is to grant your new user the appropriate privileges. For example, you can grant user privileges to all tables in the database, as well as add, edit, and remove user permissions, with this command:</p>
-<p><code>GRANT ALL PRIVILEGES ON *.* TO 'ntc '@'localhost' WITH GRANT OPTION;</code></p>
-<p>Note that, at this point, you do not need to run the <code>FLUSH PRIVILEGES</code> command again. This command is only needed when you modify level tables using statements such as <code>INSERT</code>, <code>UPDATE</code> or <code>DELETE</code>. Since you have already created a new user, instead of modifying an existing user, <code>FLUSH PRIVILEGES</code> is not needed.</p>
-<p>Exit mysql: <code>exit;</code>. Finally, check the MySQL settings.</p>
-<h3 id="step-4-testing-mysql">Step 4 – Testing MySQL<a class="headerlink" href="#step-4-testing-mysql" title="Permanent link">&para;</a></h3>
-<p>Regardless of how you installed it, MySQL will start running automatically. To check this, check its status.</p>
-<p><code>systemctl status mysql.service</code></p>
-<p>If MySQL is not running, you can start it with <code>sudo systemctl start mysql</code>.</p>
-<p>Create a new database named wordpress with the following command:</p>
-<p><code>CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</code></p>
-<p>Show databases:</p>
-<p><code>show databases;</code></p>
-<p><code>+-------------- ------+ | Database | +--------------------+ | information_schema | | mysql | | performance_schema | | sys | | wordpress | +--------------------+ 5 rows in set (0.00 sec)</code></p>
-<p>Allows a new user to be allowed to access this database.</p>
-<p><code>GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'localhost';</code></p>
-<p>or create a new user and give database access:</p>
-<p><code>GRANT ALL ON database_name.* TO 'username'@'localhost' IDENTIFIED BY 'password';</code></p>
+<h1 id="how-to-install-podman-in-debianubuntu">How to install Podman in Debian/ubuntu<a class="headerlink" href="#how-to-install-podman-in-debianubuntu" title="Permanent link">&para;</a></h1>
+<hr />
+<p><strong>podman</strong> is a tool for managing (Kubernetes) pods, containers and container images, available from <a href="https://github.com/containers/libpod">https://github.com/containers/libpod</a></p>
+<p>To install <code>podman</code> from scratch in Debian/ubuntu we need to have the below requirement met</p>
+<ul>
+<li>golang &gt;= 1.8 (stretch+)</li>
+<li>docker-runc</li>
+<li>conmon</li>
+<li>CNI networking</li>
+<li>ostree (Packaged)</li>
+<li>libapparmor-dev</li>
+</ul>
+<p>Let's begin with the Installation</p>
+<ul>
+<li>
+<p>First, update the system</p>
+<p>apt -y update</p>
+</li>
+<li>
+<p>Install Required dependency to build various podman related go lang library</p>
+<p>apt -y install \
+  vim \
+  curl \
+  gcc \
+  make \
+  cmake \
+  git \
+  btrfs-progs \
+  golang-go \
+  go-md2man \
+  iptables \
+  libassuan-dev \
+  libc6-dev \
+  libdevmapper-dev \
+  libglib2.0-dev \
+  libgpgme-dev \
+  libgpg-error-dev \
+  libostree-dev \
+  libprotobuf-dev \
+  libprotobuf-c-dev \
+  libseccomp-dev \
+  libselinux1-dev \
+  libsystemd-dev \
+  pkg-config \
+  runc \
+  uidmap \
+  libapparmor-dev</p>
+</li>
+<li>
+<p>check the runc version</p>
+</li>
+</ul>
+<p>The <code>runc</code> should at least <code>spec: 1.0.1</code> otherwise you need to build your one</p>
+<div class="highlight"><pre><span></span><code>[email protected]:~# runc -version
+runc version spec: 1.0.1-dev
+</code></pre></div>
+<ul>
+<li>
+<p>install GOLANG</p>
+<p>export GOPATH=~/go
+git clone https://go.googlesource.com/go $GOPATH
+cd $GOPATH
+git checkout tags/go1.10.8  # optional
+cd src
+./all.bash
+export PATH=$GOPATH/bin:$PATH</p>
+</li>
+<li>
+<p>Install conmon</p>
+</li>
+</ul>
+<p><code>conmon</code> is used to monitor OCI Runtimes. To build from source, use the following:</p>
+<div class="highlight"><pre><span></span><code>cd ~
+git clone https://github.com/containers/conmon
+cd conmon
+export GOCACHE=&quot;$(mktemp -d)&quot;
+make
+sudo make podman
+sudo cp /usr/local/libexec/podman/conmon  /usr/local/bin/
+</code></pre></div>
+<ul>
+<li>Configure CNI</li>
+</ul>
+<p>A basic network configuration can be achieved with:</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /etc/cni/net.d
+curl -qsSL https://raw.githubusercontent.com/containers/libpod/master/cni/87-podman-bridge.conflist | sudo tee /etc/cni/net.d/87-podman-bridge.conf
+</code></pre></div>
+<p>The directory containing CNI plugin configuration files</p>
+<div class="highlight"><pre><span></span><code>cni_config_dir = &quot;/etc/cni/net.d/&quot;
+</code></pre></div>
+<ul>
+<li>
+<p>Install CNI Plugins</p>
+<p>cd ~
+git clone https://github.com/containernetworking/plugins.git $GOPATH/src/github.com/containernetworking/plugins
+cd $GOPATH/src/github.com/containernetworking/plugins
+./build_linux.sh
+sudo mkdir -p /usr/libexec/cni
+sudo cp bin/* /usr/libexec/cni</p>
+</li>
+</ul>
+<p>Others Directories where the CNI plugin binaries may be located</p>
+<div class="highlight"><pre><span></span><code>cni_plugin_dir = [
+&quot;/usr/libexec/cni&quot;,
+&quot;/usr/lib/cni&quot;,
+&quot;/usr/local/lib/cni&quot;,
+&quot;/opt/cni/bin&quot;
+]
+</code></pre></div>
+<ul>
+<li>
+<p>Add Podman configuration registries,policy</p>
+<p>cd ~
+sudo mkdir -p /etc/containers
+sudo curl https://raw.githubusercontent.com/projectatomic/registries/master/registries.fedora -o /etc/containers/registries.conf
+sudo curl https://raw.githubusercontent.com/containers/skopeo/master/default-policy.json -o /etc/containers/policy.json</p>
+</li>
+<li>
+<p>Install PODMAN</p>
+<p>cd ~
+git clone https://github.com/containers/libpod/ $GOPATH/src/github.com/containers/libpod
+cd $GOPATH/src/github.com/containers/libpod
+make BUILDTAGS="selinux seccomp"
+sudo make install PREFIX=/usr</p>
+</li>
+<li>
+<p>Test Podman</p>
+<p>[email protected]:~# podman help
+manage pods and images</p>
+<p>Usage:
+  podman [flags]
+  podman [command]</p>
+<p>Available Commands:
+  attach      Attach to a running container
+  build       Build an image using instructions from Containerfiles
+  commit      Create new image based on the changed container
+  container   Manage Containers
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create but do not start a container
+  diff        Inspect changes on container's file systems
+  events      Show podman events
+  exec        Run a process in a running container
+  export      Export container's filesystem contents as a tar archive
+  generate    Generated structured data
+  healthcheck Manage Healthcheck
+  help        Help about any command
+  history     Show history of a specified image
+  image       Manage images
+  images      List images in local storage
+  import      Import a tarball to create a filesystem image
+  info        Display podman system information
+  init        Initialize one or more containers
+  inspect     Display the configuration of a container or image
+  kill        Kill one or more running containers with a specific signal
+  load        Load an image from container archive
+  login       Login to a container registry
+  logout      Logout of a container registry
+  logs        Fetch the logs of a container
+  mount       Mount a working container's root filesystem
+  network     Manage Networks
+  pause       Pause all the processes in one or more containers
+  play        Play a pod
+  pod         Manage pods
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image from a registry
+  push        Push an image to a specified destination
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Removes one or more images from local storage
+  run         Run a command in a new container
+  save        Save image to an archive
+  search      Search registry for image
+  start       Start one or more containers
+  stats       Display a live stream of container resource usage statistics
+  stop        Stop one or more containers
+  system      Manage podman
+  tag         Add an additional name to a local image
+  top         Display the running processes of a container
+  umount      Unmounts working container's root filesystem
+  unpause     Unpause the processes in one or more containers
+  unshare     Run a command in a modified user namespace
+  varlink     Run varlink interface
+  version     Display the Podman Version Information
+  volume      Manage volumes
+  wait        Block on one or more containers</p>
+</li>
+</ul>
 
 
 
@@ -542,7 +576,7 @@ Hướng dẫn cài đặt MySQL trên Ubuntu 18.04</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../installingbuildahandpodman/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installing buildah and podman on Ubuntu" rel="prev">
+        <a href="../cephbasedstoragetoakubernetescluster/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Ceph-based storage to a Kubernetes cluster" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -551,20 +585,20 @@ Hướng dẫn cài đặt MySQL trên Ubuntu 18.04</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Installing buildah and podman on Ubuntu
+              Ceph-based storage to a Kubernetes cluster
             </div>
           </div>
         </a>
       
       
         
-        <a href="../s3lifecycleextend/" class="md-footer__link md-footer__link--next" aria-label="Next: S3 Lifecycle Extend" rel="next">
+        <a href="../installingbuildahandpodman/" class="md-footer__link md-footer__link--next" aria-label="Next: Installing buildah and podman on Ubuntu" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              S3 Lifecycle Extend
+              Installing buildah and podman on Ubuntu
             </div>
           </div>
           <div class="md-footer__button md-icon">
